@@ -1,0 +1,13 @@
+{
+    "name": "serial_STWBC2",
+    "version": "1.0.0",
+    "description": "An open source, header only library to analyte serial data from the STWBC2 Qi transmitter",
+    "keywords": "qi, serial, st, pd, power-deliver, qi-charging, charging, wireless-charging",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/KochC/serial_STWBC2.git"
+    },
+    "license": "Apache-2.0",
+    "platforms": "*",
+    "frameworks": "*"
+}
