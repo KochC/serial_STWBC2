@@ -102,6 +102,60 @@ void resolve_message(uint8_t *message, int length) {
     data.bridgeVoltage = resolve_bridge_voltage(message[10], message[11]);
     data.rxPower = resolve_rx_power(message[12], message[13]);
     data.inputVoltage = resolve_input_voltage(message[16], message[17]);
+
+#ifdef ENABLE_STWBC2_DEBUG
+    std::cout << "STWBC2 DEBUG: " << millis() << std::endl;
+    switch (data.state) {
+    case StState::NO_STATE:
+      std::cout << "State: NO_STATE" << std::endl;
+      break;
+    case StState::SELECTION_AP_STATE:
+      std::cout << "State: SELECTION_AP_STATE" << std::endl;
+      break;
+    case StState::SELECTION_QF_STATE:
+      std::cout << "State: SELECTION_QF_STATE" << std::endl;
+      break;
+    case StState::FSM_PRE_PING_STATE:
+      std::cout << "State: FSM_PRE_PING_STATE" << std::endl;
+      break;
+    case StState::FSM_PING_STATE:
+      std::cout << "State: FSM_PING_STATE" << std::endl;
+      break;
+    case StState::CONFIG_CHECK_ID_STATE:
+      std::cout << "State: CONFIG_CHECK_ID_STATE" << std::endl;
+      break;
+    case StState::CONFIG_CHECK_EXT_ID_STATE:
+      std::cout << "State: CONFIG_CHECK_EXT_ID_STATE" << std::endl;
+      break;
+    case StState::CONFIG_CHECK_CONF_STATE:
+      std::cout << "State: CONFIG_CHECK_CONF_STATE" << std::endl;
+      break;
+    case StState::NEGOTIATION_STATE:
+      std::cout << "State: NEGOTIATION_STATE" << std::endl;
+      break;
+    case StState::RENEGOTIATION_STATE:
+      std::cout << "State: RENEGOTIATION_STATE" << std::endl;
+      break;
+    case StState::CALIBRATION_STATE:
+      std::cout << "State: CALIBRATION_STATE" << std::endl;
+      break;
+    case StState::POWER_TRANSFER_STATE:
+      std::cout << "State: POWER_TRANSFER_STATE" << std::endl;
+      break;
+    case StState::POWER_PID_STATE:
+      std::cout << "State: POWER_PID_STATE" << std::endl;
+      break;
+    default:
+      std::cout << "State: UNKNOWN (" << (int)data.state << ")" << std::endl;
+      break;
+    }
+    std::cout << "Frequency: " << (int)data.frequency << std::endl;
+    std::cout << "Control Error: " << data.controlError << std::endl;
+    std::cout << "Duty Cycle: " << data.dutyCycle << std::endl;
+    std::cout << "Bridge Voltage: " << data.bridgeVoltage << std::endl;
+    std::cout << "RX Power: " << data.rxPower << std::endl;
+    std::cout << "Input Voltage: " << data.inputVoltage << std::endl << std::endl;
+#endif
     break;
   default:
     // std::cout << "Type 0x" << std::hex << static_cast<int>(message[1]);
@@ -154,7 +208,10 @@ void loop() {
     }
     // If not collecting a message, just pass through the character
     else {
+#ifdef ENABLE_STWBC2_DEBUG
       std::cout << std::hex << static_cast<int>(c);
+      std::cout << std::dec << std::endl;
+#endif
     }
   }
 }
